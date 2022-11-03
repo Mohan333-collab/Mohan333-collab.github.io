@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+    // var _2ndHotSpots = document.querySelector('2ndHotSpot');
+    // var _1stHotSpots = document.querySelector('1stHotSpot');
+
+    // _1stHotSpots.forEach(element => {
+      
+    //   element.setAttribute('visible','false');
+
+    // });
+    // _1sthotspot.setAttribute('visible','false');
+    // _2ndhotspot.setAttribute('visible','true');
+
+    AFRAME.registerComponent('hotspot1', {
+      events: {
+        click: function (evt) {
+          console.log('This hotspot1 entity was clicked!');
+
+          var sceneEl = document.querySelector('a-scene');
+
+          var _2ndhotspot = sceneEl.querySelector('#SecondHotSpot');
+          var _1sthotspot = sceneEl.querySelector('#FirstHotSpot');
+
+          _1sthotspot.setAttribute('visible','true');
+          _2ndhotspot.setAttribute('visible','false');
+
+          var sky =  sceneEl.querySelector('#sky-src');
+          sky.setAttribute('src','./wp3244103.jpeg');
+        }
+      }
+    });
+
+    AFRAME.registerComponent('hotspot2', {
+      events: {
+        click: function (evt) {
+          console.log('This hotspot2 entity was clicked!');
+
+          var sceneEl = document.querySelector('a-scene');
+
+          var _2ndhotspot = sceneEl.querySelector('#SecondHotSpot');
+          var _1sthotspot = sceneEl.querySelector('#FirstHotSpot');
+
+          _1sthotspot.setAttribute('visible','false');
+          _2ndhotspot.setAttribute('visible','true');
+
+          var sky =  sceneEl.querySelector('#sky-src');
+          sky.setAttribute('src','./puydesancy.jpeg');
+        }
+      }
+    });
+
+    </script>
+  </head>
+  <body>
+    <a-scene cursor="rayOrigin: mouse; fuse: false" raycaster="objects: .raycastable">
+      <a-sky id="sky-src" src="./puydesancy.jpeg" rotation="0 -130 0"></a-sky>
+
+      <!-- <a-text font="kelsonsans" value="Puy de Sancy, France" width="6" position="-2.5 0.25 -1.5"
+              rotation="0 15 0"></a-text> -->
+
+      <a-entity id="SecondHotSpot" hotspot1 class="raycastable" geometry="primitive: plane" position="-1.41761 3 -1.5" rotation="" scale="2.36 1 0.00001" material="color: #8241a4"> 
+
+        <a-text font="kelsonsans" value="Move To 2nd Spot" width="6" position="-0.35674 0 7236.04925" rotation="" text="" scale="0.36 1 1"></a-text>
+
+      </a-entity>
+
+    <a-entity id="FirstHotSpot" visible="false" hotspot2 class="raycastable" geometry="primitive: plane" position="-1.41761 1.5 -1.5" rotation="" scale="2.36 1 0.00001" material="color: #8241a4">
+
+    <a-text font="kelsonsans" value="Move To 1st Spot" width="6" position="-0.35674 0 7236.04925"
+    rotation="0 0 0" scale="0.36 1 1"></a-text>
+
+    </a-entity>
+
+    </a-scene>
+
+  </body>
+
+<script>
+
+$(document).ready(function(){
+
+  $(".a-enter-vr").hide();
+
+});
+
+</script>
+
+</html>
