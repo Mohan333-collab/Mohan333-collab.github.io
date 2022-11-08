@@ -6,12 +6,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
 
-      var InAppartment_Views = ["./In Appartment/Bedroom 1.jpg",
+      let InAppartment_Views = new Array("./In Appartment/Bedroom 1.jpg",
     "./In Appartment/Bedroom 2.jpg",
   "./In Appartment/Bedroom 3.jpg",
 "./In Appartment/Dinning.jpg",
 "./In Appartment/Kitchen.jpg",
-"./In Appartment/Living 1.jpg"];
+"./In Appartment/Living 1.jpg");
 
 function preloader() 
 
@@ -20,14 +20,14 @@ function preloader()
 var heavyImage = new Image(); 
 
 InAppartment_Views.forEach(element => {
-  
   heavyImage.src = element;
-
 });
 
 heavyImage.remove();
 
 }
+
+preloader();
 
     
       // var fadingEl = document.querySelector("#lord-fader")
@@ -94,7 +94,7 @@ heavyImage.remove();
   
       </a-entity>
 
-      <a-camera>
+      <a-camera wasd-controls-enabled="false" magicWindowTrackingEnabled>
         <!-- our fake-fade sphere -->
         <a-sphere id="lord-fader" radius="0.05" 
         material="shader:flat; color: black; opacity: 0.0; side: double " 
@@ -110,7 +110,7 @@ heavyImage.remove();
 
 $(document).ready(function(){
 
-  preloader();
+  document.querySelector('a-camera').setAttribute('magicWindowTrackingEnabled','false');
 
   $(".a-enter-vr").hide();
 
