@@ -6,21 +6,28 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
 
-AFRAME.registerComponent("foo", {
-    init: function() {
-      // grab the "fading sphere"
-      var fadingEl = document.querySelector("#lord-fader")
-      // when clicked - emit the defined "startEvent"
-      this.el.addEventListener("click", e => fadingEl.emit("animate"))
-    }
-  })
-
       var InAppartment_Views = ["./In Appartment/Bedroom 1.jpg",
     "./In Appartment/Bedroom 2.jpg",
   "./In Appartment/Bedroom 3.jpg",
 "./In Appartment/Dinning.jpg",
 "./In Appartment/Kitchen.jpg",
 "./In Appartment/Living 1.jpg"];
+
+function preloader() 
+
+{
+
+var heavyImage = new Image(); 
+
+InAppartment_Views.forEach(element => {
+  
+  heavyImage.src = element;
+
+});
+
+heavyImage.remove();
+
+}
 
     
       // var fadingEl = document.querySelector("#lord-fader")
@@ -102,6 +109,8 @@ AFRAME.registerComponent("foo", {
 <script>
 
 $(document).ready(function(){
+
+  preloader();
 
   $(".a-enter-vr").hide();
 
