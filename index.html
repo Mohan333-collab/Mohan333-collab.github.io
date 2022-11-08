@@ -6,6 +6,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
 
+AFRAME.registerComponent("foo", {
+    init: function() {
+      // grab the "fading sphere"
+      var fadingEl = document.querySelector("#lord-fader")
+      // when clicked - emit the defined "startEvent"
+      this.el.addEventListener("click", e => fadingEl.emit("animate"))
+    }
+  })
+
       var InAppartment_Views = ["./In Appartment/Bedroom 1.jpg",
     "./In Appartment/Bedroom 2.jpg",
   "./In Appartment/Bedroom 3.jpg",
@@ -13,114 +22,62 @@
 "./In Appartment/Kitchen.jpg",
 "./In Appartment/Living 1.jpg"];
 
-    // var _2ndHotSpots = document.querySelector('2ndHotSpot');
-    // var _1stHotSpots = document.querySelector('1stHotSpot');
-
-    // _1stHotSpots.forEach(element => {
-      
-    //   element.setAttribute('visible','false');
-
-    // });
-    // _1sthotspot.setAttribute('visible','false');
-    // _2ndhotspot.setAttribute('visible','true');
-
-    // AFRAME.registerComponent('hotspot1', {
-    //   events: {
-    //     click: function (evt) {
-    //       console.log('This hotspot1 entity was clicked!');
-
-    //       var sceneEl = document.querySelector('a-scene');
-
-    //       var _2ndhotspot = sceneEl.querySelector('#SecondHotSpot');
-    //       var _1sthotspot = sceneEl.querySelector('#FirstHotSpot');
-
-    //       _1sthotspot.setAttribute('visible','true');
-    //       _2ndhotspot.setAttribute('visible','false');
-
-    //       var sky =  sceneEl.querySelector('#sky-src');
-    //       sky.setAttribute('src','./wp3244103.jpeg');
-    //     }
-    //   }
-    // });
-
-    // AFRAME.registerComponent('hotspot2', {
-    //   events: {
-    //     click: function (evt) {
-    //       console.log('This hotspot2 entity was clicked!');
-
-    //       var sceneEl = document.querySelector('a-scene');
-
-    //       var _2ndhotspot = sceneEl.querySelector('#SecondHotSpot');
-    //       var _1sthotspot = sceneEl.querySelector('#FirstHotSpot');
-
-    //       _1sthotspot.setAttribute('visible','false');
-    //       _2ndhotspot.setAttribute('visible','true');
-
-    //       var sky =  sceneEl.querySelector('#sky-src');
-    //       sky.setAttribute('src','./puydesancy.jpeg');
-    //     }
-    //   }
-    // });
+    
+      // var fadingEl = document.querySelector("#lord-fader")
+      // // when clicked - emit the defined "startEvent"
+      // this.el.addEventListener("click", e => fadingEl.emit("animate"))
 
     var index = 0;
 
     AFRAME.registerComponent('hotspot2', {
       events: {
+
         click: function (evt) {
-          console.log('This hotspot2 entity was clicked!');
 
-          var sceneEl = document.querySelector('a-scene');
+        console.log('This hotspot2 entity was clicked!');
 
-          // var _2ndhotspot = sceneEl.querySelector('#SecondHotSpot');
-          // var _1sthotspot = sceneEl.querySelector('#FirstHotSpot');
+        // grab the "fading sphere"
+        var fadingEl = document.querySelector("#lord-fader")
 
-          // _1sthotspot.setAttribute('visible','false');
-          // _2ndhotspot.setAttribute('visible','true');
+        fadingEl.setAttribute('dir','normal');
+        
+        fadingEl.emit("animate");
 
-          ++index;
-
-          if(index > InAppartment_Views.length-1)
-          {
-            index = 0;
-          }
-
-          var selected360Image = InAppartment_Views[index];
-
-
-          var fileName = selected360Image.split("/").pop();
-          
-          console.log("fileName "+fileName);
-
-          var roomName =  sceneEl.querySelector('#roomName');
-          roomName.setAttribute('value',fileName.replace(".jpg", ""));
-
-          var sky =  sceneEl.querySelector('#sky-src');
-          sky.setAttribute('src',selected360Image);
+        setTimeout(()=>{ ChangeTheScreen(); },1000);
         }
       }
     });
+
+    function ChangeTheScreen()
+    {
+      var sceneEl = document.querySelector('a-scene');
+
+      ++index;
+
+      if(index > InAppartment_Views.length-1)
+      {
+        index = 0;
+      }
+
+      var selected360Image = InAppartment_Views[index];
+
+
+      var fileName = selected360Image.split("/").pop();
+      
+      console.log("fileName "+fileName);
+
+      var roomName =  sceneEl.querySelector('#roomName');
+      roomName.setAttribute('value',fileName.replace(".jpg", ""));
+
+      var sky =  sceneEl.querySelector('#sky-src');
+      sky.setAttribute('src',selected360Image);
+    }
 
     </script>
   </head>
   <body>
     <a-scene cursor="rayOrigin: mouse; fuse: false" raycaster="objects: .raycastable">
       <a-sky id="sky-src" src="./In Appartment/Bedroom 1.jpg" rotation="0 -130 0"></a-sky>
-
-      <!-- <a-text font="kelsonsans" value="Puy de Sancy, France" width="6" position="-2.5 0.25 -1.5"
-              rotation="0 15 0"></a-text> -->
-
-      <!-- <a-entity id="SecondHotSpot" hotspot1 class="raycastable" geometry="primitive: plane" position="-1.41761 3 -1.5" rotation="" scale="2.36 1 0.00001" material="color: #8241a4"> 
-
-        <a-text font="kelsonsans" value="Move To 2nd Spot" width="6" position="-0.35674 0 7236.04925" rotation="" text="" scale="0.36 1 1"></a-text>
-
-      </a-entity> -->
-
-    <!-- <a-entity id="FirstHotSpot" visible="false" hotspot2 class="raycastable" geometry="primitive: plane" position="-1.41761 1.5 -1.5" rotation="" scale="2.36 1 0.00001" material="color: #8241a4">
-
-    <a-text font="kelsonsans" value="Move To 1st Spot" width="6" position="-0.35674 0 7236.04925"
-    rotation="0 0 0" scale="0.36 1 1"></a-text>
-
-    </a-entity> -->
 
     <a-text font="kelsonsans" id="roomName" value="Bedroom 1" width="6" position="-2.21352 1.77453 -1.5" rotation="" scale="" text=""></a-text>
 
@@ -129,6 +86,14 @@
       <a-text font="kelsonsans" value="Move To Next" width="6" position="-0.35674 -0.18459 7236.04925" rotation="" scale="0.36 1 1" text=""></a-text>
   
       </a-entity>
+
+      <a-camera>
+        <!-- our fake-fade sphere -->
+        <a-sphere id="lord-fader" radius="0.05" 
+        material="shader:flat; color: black; opacity: 0.0; side: double " 
+        animation="property: material.opacity; from: 0.0; to: 1.0 dur: 500; dir: alternate; loop: 2; startEvents: animate"></a-sphere>
+      </a-camera>
+
 
     </a-scene>
 
