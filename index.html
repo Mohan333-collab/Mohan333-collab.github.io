@@ -6,12 +6,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
 
-      let InAppartment_Views = new Array("./In Appartment/Bedroom 1.jpg",
-    "./In Appartment/Bedroom 2.jpg",
-  "./In Appartment/Bedroom 3.jpg",
+      let InAppartment_Views = new Array("./In Appartment/Living.jpg",
+    "./In Appartment/Bedroom_2.jpg",
+  "./In Appartment/Bedroom_3.jpg",
 "./In Appartment/Dinning.jpg",
 "./In Appartment/Kitchen.jpg",
-"./In Appartment/Living 1.jpg");
+"./In Appartment/Bedroom_1.jpg");
 
 function preloader() 
 
@@ -24,24 +24,22 @@ InAppartment_Views.forEach(element => {
 });
 
 heavyImage.remove();
-
 }
 
 preloader();
 
-    
       // var fadingEl = document.querySelector("#lord-fader")
       // // when clicked - emit the defined "startEvent"
       // this.el.addEventListener("click", e => fadingEl.emit("animate"))
 
     var index = 0; 
 
-    AFRAME.registerComponent('hotspot2', {
+    AFRAME.registerComponent('hotspot_new', {
       events: {
 
         click: function (evt) {
 
-        console.log('This hotspot2 entity was clicked!');
+        console.log('This hotspot entity was clicked!');
 
         // grab the "fading sphere"
         var fadingEl = document.querySelector("#lord-fader")
@@ -50,49 +48,120 @@ preloader();
         
         fadingEl.emit("animate");
 
-        setTimeout(()=>{ ChangeTheScreen(); },1000);
+        console.log("id "+this.el.id);
+
+        console.log("data "+this.data);
+
+        setTimeout(()=>{ ChangeTheScreen(this.el.id, this.data); },1000);
         }
       }
     });
 
-    function ChangeTheScreen()
+    function ChangeTheScreen(changeTo, changedFrom)
     {
       var sceneEl = document.querySelector('a-scene');
 
-      ++index;
+      // ++index;
 
-      if(index > InAppartment_Views.length-1)
-      {
-        index = 0;
-      }
+      // if(index > InAppartment_Views.length-1)
+      // {
+      //   index = 0;
+      // }
 
-      var selected360Image = InAppartment_Views[index];
+      // var selected360Image = InAppartment_Views[index];
 
 
-      var fileName = selected360Image.split("/").pop();
+      // var fileName = selected360Image.split("/").pop();
       
-      console.log("fileName "+fileName);
+      console.log("changeTo "+changeTo);
+      console.log("changedFrom "+changedFrom);
 
-      var roomName =  sceneEl.querySelector('#roomName');
-      roomName.setAttribute('value',fileName.replace(".jpg", ""));
+      // var roomName =  sceneEl.querySelector('#roomName');
+      // roomName.setAttribute('value',fileName.replace(".jpg", ""));
 
       var sky =  sceneEl.querySelector('#sky-src');
-      sky.setAttribute('src',selected360Image);
+      sky.setAttribute('src',"./In Appartment/"+changeTo+".jpg");
+
+      EnableCorrespondingHotspots(changedFrom,changeTo);
     }
+
+    // var previousClassName = "";
+
+    function EnableCorrespondingHotspots(changedFrom,changeTo)
+    {
+      var sceneEl = document.querySelector('a-scene');
+
+if(changedFrom === "")
+{
+
+}
+else
+{
+  var hotspotClasses =  sceneEl.querySelectorAll("."+changedFrom);
+
+  console.log("Disable "+hotspotClasses.length);
+
+  for(var i=0;i<hotspotClasses.length;i++)
+  {
+    hotspotClasses[i].setAttribute('visible',false);
+  }
+}
+
+if(changeTo === "")
+{
+
+}
+else
+{
+  var hotspotClasses =  sceneEl.querySelectorAll("."+changeTo);
+
+  console.log("Enable "+hotspotClasses.length);
+
+  for(var i=0;i<hotspotClasses.length;i++)
+  {
+    hotspotClasses[i].setAttribute('visible',true);
+  }
+}
+    }
+
 
     </script>
   </head>
   <body>
     <a-scene cursor="rayOrigin: mouse; fuse: false" raycaster="objects: .raycastable">
-      <a-sky id="sky-src" src="./In Appartment/Bedroom 1.jpg" rotation="0 -130 0"></a-sky>
+      <a-sky id="sky-src" src="" rotation="0 -130 0"></a-sky>
 
-    <a-text font="kelsonsans" id="roomName" value="Bedroom 1" width="6" position="-2.21352 1.77453 -1.5" rotation="" scale="" text=""></a-text>
+   
+<!-- 
+     <a-entity id="FirstHotSpot" visible="" hotspot2="" class="raycastable" geometry="primitive: plane" position="1.41761 1.5 -1.5" rotation="0 -56.97041000000001 0" scale="1.5 0.75 0.00001" material="color: #8241a4; transparent: true; opacity: 0.5">
 
-    <a-entity id="FirstHotSpot" visible="true" hotspot2 class="raycastable" geometry="primitive: plane" position="-1.41761 1.5 -1.5" rotation="" scale="2.36 1 0.00001" material="color: #8241a4">
-
-      <a-text font="kelsonsans" value="Move To Next" width="6" position="-0.35674 -0.18459 7236.04925" rotation="" scale="0.36 1 1" text=""></a-text>
+      <a-text font="kelsonsans" value="" width="6" position="-0.35 0 100" rotation="" scale="0.5 1.25 1" text=""></a-text>
   
-      </a-entity>
+      </a-entity> -->
+
+<!--   Start    -->
+
+<!-- Living Room Hotspots -->
+
+<a-entity class="raycastable Living" id="Kitchen" visible="" hotspot_new="Living" geometry="primitive: plane" position="-2.05824 2.14005 6.13747" rotation="0 180 0" scale="1.5 0.75 0.00001" material="color: #8241a4; transparent: true; opacity: 0.5">
+
+  <a-text font="kelsonsans" value="Kitchen" width="6" position="-0.24 0 500" rotation="" scale="0.5 1.25 1" text=""></a-text>
+
+  </a-entity>
+
+  <a-entity class="raycastable Living" id="Dinning" visible="" hotspot_new="Living" geometry="primitive: plane" position="-6.77794 2.14005 6.72025" rotation="0 139.0734726543096 0" scale="1.5 0.75 0.00001" material="color: #8241a4; transparent: true; opacity: 0.5">
+
+    <a-text font="kelsonsans" value="Dinning" width="6" position="-0.24 0 500" rotation="" scale="0.5 1.25 1" text=""></a-text>
+
+    </a-entity>
+
+  <a-entity id="Bedroom_1" visible="" hotspot_new="Living" class="raycastable Living" geometry="primitive: plane" position="3.89182 1.63942 -0.74745" rotation="0 -56.97041000000001 0" scale="1.5 0.75 0.00001" material="color: #8241a4; transparent: true; opacity: 0.5">
+
+    <a-text font="kelsonsans" value="Bedroom 1" width="6" position="-0.35 0 100" rotation="" scale="0.5 1.25 1" text=""></a-text>
+
+    </a-entity>
+
+            <!-- End Living Room Hotspots -->
 
       <a-camera wasd-controls-enabled="false" magicWindowTrackingEnabled>
         <!-- our fake-fade sphere -->
@@ -113,6 +182,22 @@ $(document).ready(function(){
   document.querySelector('a-camera').setAttribute('magicWindowTrackingEnabled','false');
 
   $(".a-enter-vr").hide();
+
+  var selected360Image = InAppartment_Views[0];
+
+  var fileName = selected360Image.split("/").pop();
+  
+  console.log("fileName "+fileName);
+
+  EnableCorrespondingHotspots("",fileName.replace(".jpg"));
+
+  var sceneEl = document.querySelector('a-scene');
+
+  // var roomName =  sceneEl.querySelector('#roomName');
+  // roomName.setAttribute('value',fileName.replace(".jpg", ""));
+
+  var sky =  sceneEl.querySelector('#sky-src');
+  sky.setAttribute('src',selected360Image);
 
 });
 
